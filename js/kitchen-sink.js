@@ -52,7 +52,7 @@ $$(document).on("pageInit", function(e) {
 	console.log('departures page loaded');
 	//var loadNews();
 		$(function () {
-		var htmlText ="";
+		var htmlText1 ="";
 		console.log('222222222222222');
 		
 				$.ajax({
@@ -65,10 +65,10 @@ $$(document).on("pageInit", function(e) {
 							//$("#news").val(data);
 							$.each(data, function(i, field){
 								htmlText1 += '<li><a href="#" data-popover=".popover-' + data[i].id + '" class="link open-popover" class="item-link item-content">';
-								htmlText1 += '<div class="item-media"><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></div>';
+								
 								htmlText1 += '<div class="item-inner">';
-								htmlText1 += '<div class="item-title">' + data[i].aAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div>';
-								htmlText1 += '<div class="item-after">' + data[i].dDate + ' ' + data[i].dTime + '</div>';
+								htmlText1 += '<div class="item-title"> <img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"><div class="smallfont">' + data[i].aAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div></div>';
+								htmlText1 += '<div class="item-after timefont">' + data[i].dDate + '<br> ' + data[i].dTime + '</div>';
 								htmlText1 += '</div></a></li>';
 								
 								htmlText1 += '<div class="popover popover-' + data[i].id + '">';
@@ -76,7 +76,8 @@ $$(document).on("pageInit", function(e) {
 								htmlText1 += '<div class="popover-inner">';
 								htmlText1 += '<div class="content-block">';
 								htmlText1 += '<p><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></p>';
-								htmlText1 += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + 'minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText1 += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + ' minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText1 += '<a href="#" class="timefont close-popover">x</a>';
 								htmlText1 += '</div>';
 								htmlText1 += '</div>';
 								htmlText1 += '</div>';
@@ -112,10 +113,9 @@ $$(document).on("pageInit", function(e) {
 							//$("#news").val(data);
 							$.each(data, function(i, field){
 								htmlText += '<li><a href="#" data-popover=".popover-' + data[i].id + '" class="link open-popover" class="item-link item-content">';
-								htmlText += '<div class="item-media"><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></div>';
 								htmlText += '<div class="item-inner">';
-								htmlText += '<div class="item-title">' + data[i].dAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div>';
-								htmlText += '<div class="item-after">' + data[i].aDate + ' ' + data[i].aTime + '</div>';
+								htmlText += '<div class="item-title"> <img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"><div class="smallfont">' + data[i].dAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div></div>';
+								htmlText += '<div class="item-after timefont">' + data[i].aDate + '<br> ' + data[i].aTime + '</div>';
 								htmlText += '</div></a></li>';
 								
 								htmlText += '<div class="popover popover-' + data[i].id + '">';
@@ -123,7 +123,8 @@ $$(document).on("pageInit", function(e) {
 								htmlText += '<div class="popover-inner">';
 								htmlText += '<div class="content-block">';
 								htmlText += '<p><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></p>';
-								htmlText += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + 'minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + ' minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText += '<a href="#" class="timefont close-popover">x</a>';
 								htmlText += '</div>';
 								htmlText += '</div>';
 								htmlText += '</div>';
