@@ -123,21 +123,33 @@ $$(document).on("pageInit", function(e) {
 						success:function jsonCallback(data){
 							//$("#news").val(data);
 							$.each(data, function(i, field){
-								htmlText += '<li><a href="#" data-popover=".popover-' + data[i].id + '" class="link open-popover" class="item-link item-content">';
-								htmlText += '<div class="item-media"><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></div>';
+								htmlText += '<div class="list-block accordion-list">';
+								htmlText += '<ul>';
+								htmlText += '<li class="accordion-item"><a href="#" class="item-link item-content">';
 								htmlText += '<div class="item-inner">';
-								htmlText += '<div class="item-title">' + data[i].dAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div>';
-								htmlText += '<div class="item-after">' + data[i].aDate + ' ' + data[i].aTime + '</div>';
-								htmlText += '</div></a></li>';
-								
-								htmlText += '<div class="popover popover-' + data[i].id + '">';
-								htmlText += '<div class="popover-angle"></div>';
-								htmlText += '<div class="popover-inner">';
-								htmlText += '<div class="content-block">';
-								htmlText += '<p><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></p>';
-								htmlText += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br>departure: ' + data[i].dDate + ' ' + data[i].dTime + '<br> arrival:' + data[i].aDate + ' ' + data[i].aTime + '<br> plane:' + data[i].plane + '<br> widebody: ' + data[i].widebody + '<br>from: ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br>to: ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')</p>';
+								htmlText += '<div class="item-title"><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></div>';
+								htmlText += '</div></a>';
+								htmlText += '<div class="accordion-item-content">';
+								htmlText += '<div class="list-block">';
+								htmlText += '<ul>';
+								htmlText += '<li>';
+								htmlText += '<div class="item-content">';
+								htmlText += '<div class="item-media"><i class="icon material-icons">airplanemode_active</i></div>';
+								htmlText += '<div class="item-inner">';
+								htmlText += '<div class="row">';
+								htmlText += '<div class="col-50 smallfont">' + data[i].airline + ' ' + data[i].flight + '</div>';
+								htmlText += '<div class="col-50 smallfont">' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')</div>';
+								htmlText += '<div class="col-50 smallfont">' + data[i].aDate + ' ' + data[i].aTime + '</div>';
+								htmlText += '<div class="col-50"><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></div>';
 								htmlText += '</div>';
 								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</li>';
+								htmlText += '</ul>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</li>';
+								htmlText += '</ul>';
 								htmlText += '</div>';
 							});
 							$("#arrs").html(htmlText);
