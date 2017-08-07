@@ -27,6 +27,6 @@
 	<splash platform="android" qualifier="land-xhdpi" src="img/splash/android/land-xhdpi.png" />
 	
 	
-	
 	<splash platform="windows" src="img/splash/windows/1152x1920.png" width="1152" height="1920"/>
+	<preference name="SplashScreenDelay" value="5000" />
 </widget>
