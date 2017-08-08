@@ -7689,7 +7689,7 @@
             }
             if (app.params.material && app.params.materialRipple) {
                 document.addEventListener('contextmenu', function (e) {
-                    if (activableElement) removeActive();
+                    removeActive();
                     rippleTouchEnd();
                 });
             }
