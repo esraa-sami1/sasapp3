@@ -1450,3 +1450,23 @@ myApp.onPageInit('animation', function (page) {
             );
     });
 });
+
+/* ===== Animation ===== */
+var link = $(this);
+
+//put link in timetout context, we need wait 1400 ms until animation finish then we can start animation to hide ripple effect
+setTimeout(function (link_a) {
+    return function () {
+        //we find all ripples -> for each of them we start hide animation -> then we need to wait another 1400 ms until finish application
+        link_a.find(".ripple-wave").each(function (index, ripple) {
+            $(ripple).css('opacity', 0);
+
+            setTimeout(function (ripple) {
+                return function () {
+                    $(ripple).remove();
+                }
+            }(ripple), 1400);
+
+        })
+    }
+}(link), 1400);   });
