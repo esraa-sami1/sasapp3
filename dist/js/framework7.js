@@ -149,7 +149,7 @@
                         '<span class="preloader-inner-half-circle"></span>' +
                     '</span>' +
                 '</span>',
-            materialRipple: true,
+            materialRipple: false,
             materialRippleElements: '.ripple, a.link, a.item-link, .button, .modal-button, .tab-link, .label-radio, .label-checkbox, .actions-modal-button, a.searchbar-clear, a.floating-button, .floating-button > a, .speed-dial-buttons a',
             // Auto init
             init: true,
@@ -7689,7 +7689,7 @@
             }
             if (app.params.material && app.params.materialRipple) {
                 document.addEventListener('contextmenu', function (e) {
-                    removeActive();
+                    if (activableElement) removeActive();
                     rippleTouchEnd();
                 });
             }
