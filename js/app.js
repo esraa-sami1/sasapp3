@@ -1,207 +1,324 @@
-// Initialize app
-function findElement(selector) {
-    var box = null;
-    return box = $(".page-on-center").length > 0 ? $(".view-main").find(".page-on-center " + selector) : $(".view-main").find(".page").find(selector);
-}
-
-function naxvarBg() {
-    var navbar = $(".navbar-anim-on-scroll"), box = null, cls = "active";
-    return 0 === navbar.length ? !1 : (box = $(".page-on-center").length > 0 ? navbar.next().find(".page-on-center .page-content") : navbar.next().find(".page .page-content"), 
-    box.scrollTop() > 10 ? navbar.addClass(cls) : navbar.removeClass(cls), void box.scroll(function() {
-        $(this).scrollTop() > 40 ? navbar.addClass(cls) : navbar.removeClass(cls);
-    }));
-}
-
-var myApp = new Framework7({
-    swipeBackPage: !1,
-    pushState: !0,
-    swipePanel: "left",
-    modalTitle: "Title",
-	init: false
-}), $$ = Dom7;
-
-
-var mainView = myApp.addView(".view-main", {
-    dynamicNavbar: !0
-});
-
 $$(document).on("pageInit", function(e) {
     var page = e.detail.page;
 	console.log('initialized');
-		mainView.router.load({
-		   url: 'pages/home.html',
-		   ignoreCache: true,
-		   reload: true
-		});
+
 	
 	// index page
-	if (page.name === 'indexpage') {
+	if (page.name === 'index') {
 		console.log('Starting index page');	
 	}
 	
-	// news home page
-	if (page.name === 'home') {
-	console.log('Starting home page');
-		var indexText ="";
-		$.ajax({
-		  beforeSend: function() { myApp.showIndicator(); },
-		  complete: function(){ myApp.hideIndicator(); },
-		  url: "http://webhosting.sd/common7/getentries.php",
-		  dataType: "jsonp",
-		  jsonpCallback: "jsonCallback",
-		  success: function jsonCallback(data){
-					  $.each(data, function(i, field){
-						if (data[i].imageurl =="null") {
-							thisimageurl = "img/noimage.jpg";
-						} else {
-							thisimageurl= data[i].imageurl;
-						}
-						
-						if (data[i].catid ==44) {
-							catname="سياسية";
-						} else if (data[i].catid ==46) {
-							catname="إقتصادية";
-						} else if (data[i].catid ==38) {
-							catname="رياضية";
-						} else if (data[i].catid ==43) {
-							catname="ثقافة و فن";
-						} else if (data[i].catid ==45) {
-							catname="عالمية";
-						} else if (data[i].catid ==42) {
-							catname="تكنولوجيا";
-						} else if (data[i].catid ==41) {
-							catname="الأسرة و المجتمع";
-						} else if (data[i].catid ==40) {
-							catname="صحة و موضة";
-						} else {
-							catname="غير محدد";
-						}
-												
-						indexText += '<article class="rtl">';
-						indexText += '<div class="text">';
-						indexText += '<h2>';
-						indexText += '<a href="pages/details.html?getid=' + data[i].id +'">' + data[i].title + '</a>';
-						indexText += '</h2>';
-						indexText += '<span class="badge badge-secondary badge-square text-uppercase">' + catname + '</span>';
-						indexText += '</div>';
-						indexText += '<img width="100%" class="article-bg" src="' + thisimageurl + '" />';
-						indexText += '</article>';
-					  });
-						$("#indexHtml").html(indexText);
-
-					},
-           error:function(XMLHttpRequest,textStatus,errorThrown){
-				alert("Failed Loading Home");
-           }
-		});		
-	}
-	
-	// newscat page
-	if (page.name === 'newscat') {
-	console.log('Starting newscat page');
+	// departures page
+	if (page.name === 'departures') {
+	console.log('departures page loaded');
 	//var loadNews();
-		$(function () {
-		//var getid = window.location.hash.substring(16);
-		var getid = page.query.getid;
-		var htmlText ="";
+		var htmlText1 ="";
+		console.log('222222222222222');
 		
 				$.ajax({
 						beforeSend: function() { myApp.showIndicator(); },
 						complete: function(){ myApp.hideIndicator(); },
-						url:'http://webhosting.sd/common7/getcat.php',
-						data: {cat:getid},
+						url:'http://webhosting.sd/~sasapp/departures.php',
 						dataType: "jsonp",
 						jsonpCallback: "jsonCallback",
 						success:function jsonCallback(data){
 							//$("#news").val(data);
 							$.each(data, function(i, field){
-								category=data[i].category;
-								if (data[i].imageurl =="null") {
-									thisimageurl = "img/noimage.jpg";
-								} else {
-									thisimageurl= data[i].imageurl;
-								}
-								htmlText += '<div class="card card-header-pic">';
-								htmlText += '<div class="card-header color-white no-border" valign="bottom" style="background-image:url(\'' + thisimageurl + '\')">';
-								htmlText += '<a href="pages/details.html?getid=' + data[i].id + '">' + data[i].title + '</a>';
-								htmlText += '</div>';
-								htmlText += '<div class="card-info">';
-								htmlText += '<div class="row">';
-								htmlText += '<div class="col-66 text-right">';
-								htmlText += '<small>' + data[i].date + '</small>';
-								htmlText += '</div>';
-								htmlText += '</div>';
-								htmlText += '</div>';
-								htmlText += '<div class="card-content">';
-								htmlText += '<div class="card-content-inner">';
-								htmlText += '<p>' + data[i].content + '</p>';
-								htmlText += '</div>';
-								htmlText += '</div>';
-								htmlText += '<div class="card-footer">';
-								htmlText += '<a class="link" href="pages/details.html?getid=' + data[i].id + '"> إقرأ المزيد <span class="kkicon icon-chevron-left-square"></span></a>';
-								htmlText += '</div>';
-								htmlText += '</div>';
+								htmlText1 += '<li><a href="#" data-popover=".popover-' + data[i].id + '" class="link open-popover" class="item-link item-content">';
+								
+								htmlText1 += '<div class="item-inner">';
+								htmlText1 += '<div class="item-title"> <img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"><div class="smallfont">' + data[i].aAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div></div>';
+								htmlText1 += '<div class="item-after timefont">' + data[i].dDate + '<br> ' + data[i].dTime + '</div>';
+								htmlText1 += '</div></a></li>';
+								
+								htmlText1 += '<div class="popover popover-' + data[i].id + '">';
+								htmlText1 += '<div class="popover-angle"></div>';
+								htmlText1 += '<div class="popover-inner">';
+								htmlText1 += '<div class="content-block">';
+								htmlText1 += '<p><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></p>';
+								htmlText1 += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + ' minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText1 += '<a href="#" class="timefont close-popover">X Close</a>';
+								htmlText1 += '</div>';
+								htmlText1 += '</div>';
+								htmlText1 += '</div>';
 							});
-							$("#category").html(category);
-							$("#Results").html(htmlText);
-							console.log(category);
+							$("#deps").html(htmlText1);
+							console.log("Done");
 							
 						},
 						error:function(XMLHttpRequest,textStatus,errorThrown){
-							alert("Failed Loading News Category");
+							alert("Failed Loading Departures List");
 						}
 
 					});
-		});
 	}
-
-	// details page				
-	if (page.name === 'details') {
-	console.log('Starting details page');
-		var getid = page.query.getid;
-		var detailsText ="";
-				$.ajax({
-                    beforeSend: function() { myApp.showIndicator(); },
-					complete: function(){ myApp.hideIndicator(); },
-					url:'http://webhosting.sd/common7/entry.php',
-					data: {getid:getid},
-                    dataType: "jsonp",
-					jsonpCallback: "jsonCallback",
-                    success:function jsonCallback(data){
-						//$("#news").val(data);
-						$.each(data, function(i, field){
-							if (data[0].imageurl ==null) {
-								thisimageurl = "img/noimage.jpg";
-							} else {
-								thisimageurl= data[0].imageurl;
-							}
+	/////////// end
+	
+	// arrivals page
+	if (page.name === 'arrivals') {
+	console.log('arrivals page loaded');
+	//var loadNews();
+		var htmlText ="";
+		console.log('8888888888888888');
 		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/arrivals.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								htmlText += '<li><a href="#" data-popover=".popover-' + data[i].id + '" class="link open-popover" class="item-link item-content">';
+								htmlText += '<div class="item-inner">';
+								htmlText += '<div class="item-title"> <img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"><div class="smallfont">' + data[i].dAirportCode + ' - ' + data[i].airline + ' ' + data[i].flight + '</div></div>';
+								htmlText += '<div class="item-after timefont">' + data[i].aDate + '<br> ' + data[i].aTime + '</div>';
+								htmlText += '</div></a></li>';
+								
+								htmlText += '<div class="popover popover-' + data[i].id + '">';
+								htmlText += '<div class="popover-angle"></div>';
+								htmlText += '<div class="popover-inner">';
+								htmlText += '<div class="content-block">';
+								htmlText += '<p><img src="img/airlines/' + data[i].logoname + '" width="100" alt="' + data[i].logoalt + '"></p>';
+								htmlText += '<p>' + data[i].airline + ' ' + data[i].flight + '<br><br><i class="color-blue">from:</i> ' + data[i].dAirportName + ' (' + data[i].dAirportCode + ')<br><i class="color-blue">to:</i> ' + data[i].aAirportName + ' (' + data[i].aAirportCode + ')<br><i class="color-blue">departure:</i> ' + data[i].dDate + ' ' + data[i].dTime + '<br><i class="color-blue">actual:</i> ' + data[i].dDateActual + ' ' + data[i].dTimeActual + '<br><i class="color-blue">arrival:</i> ' + data[i].aDate + ' ' + data[i].aTime + '<br><i class="color-blue">actual:</i> ' + data[i].aDateActual + ' ' + data[i].aTimeActual + '<br><i class="color-blue">duration:</i> ' + data[i].flightDuration + ' minutes<br><i class="color-blue">departure terminal:</i> ' + data[i].dTerminal + '<br><i class="color-blue">plane:</i> ' + data[i].plane + '<br><i class="color-blue">widebody:</i> ' + data[i].widebody + '<br><i class="color-blue">tail number:</i> ' + data[i].tailNumber + '<br><span class="badge bg-' + data[i].statuscolor + '">' + data[i].statusname + '</span></p>';
+								htmlText += '<a href="#" class="timefont close-popover">X Close</a>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+								htmlText += '</div>';
+							});
+							$("#arrs").html(htmlText);
+							console.log("Done Arrivals");
 							
-							detailsText += '<img width="100%" src=\'' + thisimageurl + '\'>';
-							detailsText += '<div class="article-data rtl">';
-							detailsText += '<small class="rtl nudgeleft">';
-							detailsText += '<span>' + data[0].date + '</span>';
-							detailsText += '</small>';
-							detailsText += '<h1 class="rtl nudgeleft">' + data[0].title + '</h1>';
-							detailsText += '</div>';
-							detailsText += '<div class="content-block mt-25 rtl">';
-							detailsText += '<p>' + data[0].content + '</p>';
-							detailsText += '</div>';
-						});
-						$("#detailsHtml").html(detailsText);
-					},
-                    error:function(XMLHttpRequest,textStatus,errorThrown){
-                        alert("Failed Loading Details");
-                    }
-				});
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading Arrivals List");
+						}
+
+					});
+	}
+	/////////// end
+	// about page
+	if (page.name === 'about') {
+	console.log('about page loaded');
+	//var loadNews();
+		var aboutText ="";
+		console.log('8888888888888888');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/about.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								aboutText += '<div class="swiper-slide">';
+								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header1a + '</div>';
+								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header1b + '</div>';
+								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								aboutText += '' + data[i].body1 + '';
+								aboutText += '</div>';
+								aboutText += '</div>';
+
+								aboutText += '<div class="swiper-slide">';
+								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header2a + '</div>';
+								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header2b + '</div>';
+								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								aboutText += '' + data[i].body2 + '';
+								aboutText += '</div>';
+								aboutText += '</div>';
+								
+								aboutText += '<div class="swiper-slide">';
+								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header3a + '</div>';
+								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header3b + '</div>';
+								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								aboutText += '' + data[i].body3 + '';
+								aboutText += '</div>';
+								aboutText += '</div>';
+							});
+							$("#about").html(aboutText);
+							console.log(aboutText);
+							console.log("Done About");
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading About Page");
+						}
+
+					});
+	}
+	/////////// end
+	
+	// vip page
+	if (page.name === 'vip') {
+	console.log('vip page loaded');
+
+	//var loadNews();
+		var vipText ="";
+		console.log('8888888888888888');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/vip.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								vipText += '<li class="accordion-item"><a href="#" class="item-link item-content">';
+								vipText += '<div class="item-inner">';
+								vipText += '<div class="swiper-slide-title whitefont"><b>' + data[i].header1a + '</b></div>';
+								vipText += '</div></a>';
+								vipText += '<div class="accordion-item-content">';
+								vipText += '<div class="content-block whitefont">';
+								vipText += '<p>' + data[i].body1 + '</p>';
+								vipText += '</div>';
+								vipText += '</div>';
+								vipText += '</li>';
+
+								vipText += '<li class="accordion-item"><a href="#" class="item-link item-content">';
+								vipText += '<div class="item-inner">';
+								vipText += '<div class="item-title whitefont"><b>' + data[i].header2a + '</b></div>';
+								vipText += '</div></a>';
+								vipText += '<div class="accordion-item-content">';
+								vipText += '<div class="content-block whitefont">';
+								vipText += '<p>' + data[i].body2 + '</p>';
+								vipText += '</div>';
+								vipText += '</div>';
+								vipText += '</li>';
+								
+								vipText += '<li class="accordion-item"><a href="#" class="item-link item-content">';
+								vipText += '<div class="item-inner">';
+								vipText += '<div class="item-title whitefont"><b>' + data[i].header3a + '</b></div>';
+								vipText += '</div></a>';
+								vipText += '<div class="accordion-item-content">';
+								vipText += '<div class="content-block whitefont">';
+								vipText += '<p>' + data[i].body3 + '</p>';
+								vipText += '</div>';
+								vipText += '</div>';
+								vipText += '</li>';
+							});
+							$("#vip").html(vipText);
+							console.log(vipText);
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading VIP Page");
+						}
+
+					});
+	}
+	/////////// end
+	
+	// baggage page
+	if (page.name === 'baggage') {
+	console.log('baggage page loaded');
+	//var loadNews();
+		var baggageText ="";
+		console.log('8888888888888888');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/baggage.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								baggageText += '<div class="swiper-slide">';
+								baggageText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								baggageText += '<p>' + data[i].body + '</p>';
+								baggageText += '</div>';
+								baggageText += '</div>';
+
+							});
+							$("#baggage").html(baggageText);
+							console.log("Done Baggage");
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading Baggage Page");
+						}
+
+					});
+	}
+	/////////// end
+	
+	// kia page
+	if (page.name === 'kia') {
+	console.log('kia page loaded');
+	//var loadNews();
+		var kiaText ="";
+		console.log('8888888888888888');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/kia.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								kiaText += '<div class="swiper-slide">';
+								kiaText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								kiaText += '<p>' + data[i].body + '</p>';
+								kiaText += '</div>';
+								kiaText += '</div>';
+
+							});
+							$("#kia").html(kiaText);
+							console.log("Done kia");
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading KIA Page");
+						}
+
+					});
+	}
+	/////////// end
+	
+	// SAS page
+	if (page.name === 'sas') {
+	console.log('sas page loaded');
+	//var loadNews();
+		var sasText ="";
+		console.log('8888888888888888');
+		
+				$.ajax({
+						beforeSend: function() { myApp.showIndicator(); },
+						complete: function(){ myApp.hideIndicator(); },
+						url:'http://webhosting.sd/~sasapp/sas.php',
+						dataType: "jsonp",
+						jsonpCallback: "jsonCallback",
+						success:function jsonCallback(data){
+							//$("#news").val(data);
+							$.each(data, function(i, field){
+								sasText += '<div class="swiper-slide">';
+								sasText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
+								sasText += '<p>' + data[i].body + '</p>';
+								sasText += '</div>';
+								sasText += '</div>';
+
+							});
+							$("#sas").html(sasText);
+							console.log("Done kia");
+							
+						},
+						error:function(XMLHttpRequest,textStatus,errorThrown){
+							alert("Failed Loading SAS Page");
+						}
+
+					});
 	}
 	/////////// end
 
-	$(".zoom").swipebox(), $(".navbar").removeClass("navbar-clear"), "indexpage" !== page.name && "dashboard-1" !== page.name && "post" !== page.name && "menu" !== page.name && "login" !== page.name && "registration" !== page.name && "article" !== page.name && "splash" !== page.name || $(".navbar").addClass("navbar-clear");
-
 }), $(document).ready(function() {
 // enter here
-myApp.init();
 console.log('initialized with jquery');
-window.location.href = "#!/pages/home.html";
 });
