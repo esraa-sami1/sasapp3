@@ -102,7 +102,12 @@ $$(document).on("pageInit", function(e) {
 	if (page.name === 'about') {
 	console.log('about page loaded');
 	//var loadNews();
-		var aboutText ="";
+		var aboutText1 ="";
+		var aboutText2 ="";
+		var aboutText3 ="";
+		var aboutBody1 ="";
+		var aboutBody2 ="";
+		var aboutBody3 ="";
 		console.log('8888888888888888');
 		
 				$.ajax({
@@ -114,32 +119,33 @@ $$(document).on("pageInit", function(e) {
 						success:function jsonCallback(data){
 							//$("#news").val(data);
 							$.each(data, function(i, field){
-								aboutText += '<div class="swiper-slide">';
-								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header1a + '</div>';
-								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header1b + '</div>';
-								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
-								aboutText += '' + data[i].body1 + '';
-								aboutText += '</div>';
-								aboutText += '</div>';
+								aboutText1 += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header1a + '</div>';
+								aboutText1 += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header1b + '</div>';
+								aboutBody1 = '<p></p>' + data[i].body1;
 
-								aboutText += '<div class="swiper-slide">';
-								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header2a + '</div>';
-								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header2b + '</div>';
-								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
-								aboutText += '' + data[i].body2 + '';
-								aboutText += '</div>';
-								aboutText += '</div>';
+								aboutText2 += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header2a + '</div>';
+								aboutText2 += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header2b + '</div>';
+								aboutBody2 = '<p></p>' + data[i].body2;
 								
-								aboutText += '<div class="swiper-slide">';
-								aboutText += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header3a + '</div>';
-								aboutText += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header3b + '</div>';
-								aboutText += '<div data-swiper-parallax="-300" class="swiper-slide-text">';
-								aboutText += '' + data[i].body3 + '';
-								aboutText += '</div>';
-								aboutText += '</div>';
+								aboutText3 += '<div data-swiper-parallax="-100" class="swiper-slide-title">' + data[i].header3a + '</div>';
+								aboutText3 += '<div data-swiper-parallax="-200" class="swiper-slide-subtitle">' + data[i].header3b + '</div>';
+								aboutBody3 = '<p></p>' + data[i].body3;
 							});
-							$("#about").html(aboutText);
-							console.log(aboutText);
+							$("#aboutheader1").html(aboutText1);
+							$("#aboutbody1").html(aboutBody1);
+							
+							$("#aboutheader2").html(aboutText2);
+							$("#aboutbody2").html(aboutBody2);
+							
+							$("#aboutheader3").html(aboutText3);
+							$("#aboutbody3").html(aboutBody3);
+							
+							console.log(aboutText1);
+							console.log(aboutBody1);
+							console.log(aboutText2);
+							console.log(aboutBody2);
+							console.log(aboutText3);
+							console.log(aboutBody3);
 							console.log("Done About");
 							
 						},
@@ -317,6 +323,42 @@ $$(document).on("pageInit", function(e) {
 					});
 	}
 	/////////// end
+	
+	// contact page
+	if (page.name === 'contact') {
+	console.log('contact page loaded');
+		$(function() {
+			$(".button").click(function() {
+
+				var name = $("input#name").val();
+				var email = $("input#email").val();
+				var phone = $("input#phone").val();
+				var subject = $("select#subject").val();
+				var message = $("textarea#message").val();
+				var dataString = 'name='+ name + '&email=' + email + '&phone=' + phone + '&subject=' + subject + '&message=' + message;
+				
+				$.ajax({
+				  beforeSend: function() { myApp.showIndicator(); },
+				  complete: function(){ myApp.hideIndicator(); },
+				  dataType: "jsonp",
+				  jsonpCallback: "jsonCallback",
+				  type: "GET",
+				  url: "http://webhosting.sd/~sasapp/contact.php",
+				  data: dataString,
+				  success: function jsonCallback(data){
+					alert("Message sent. We will get back to you shortly..");
+					$.each(data, function(i, field){
+					console.log(data[i]);
+					});
+				  },
+				  error:function(XMLHttpRequest,textStatus,errorThrown){
+					alert("Failed sending message");
+				  }
+				});
+				return false;
+			});
+		});
+	}
 
 }), $(document).ready(function() {
 // enter here
